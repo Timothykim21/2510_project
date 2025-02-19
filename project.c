@@ -22,13 +22,6 @@ int actualIntCheck(char input[]) {
     return found;
 }
 
-// initialise all empty
-void initStudentIDs(int idArray[]) {
-    for (size_t i = 0; i < MAX_STUDENTS; i++) {
-        idArray[i] = -1;
-    }
-}
-
 void addStudent() {
     char name[100], program[100], group[50];
     char ID[100], age[100];
@@ -93,6 +86,7 @@ void addStudent() {
     if (!scanf("%f", &gpaInput)) {
         printf("Invalid GPA input\n");
         int c;
+        // loop to clear out input buffer!
         while ((c = getchar()) != '\n' && c != EOF) {
         };
         return;
@@ -106,6 +100,7 @@ void addStudent() {
             return; // exit out of the function if not alphabet
         }
     }
+    // Validates input to be b or d
     if (!(group[0] == 'B' || group[0] == 'b' || group[0] == 'D' || group[0] == 'd')) {
         printf("Invalid group format\n");
         return;
@@ -243,8 +238,7 @@ void listStudentGroup() {
     int result = actualIntCheck(group);
 
     if (result != 1) {
-        printf(
-            "You fucked up you dumb stupid bitch your are going to fail the math exam and your mom doesnt love you and i have sex with her.");
+        printf("Invalid group Input.");
         return;
     }
 
@@ -315,7 +309,7 @@ int main(void) {
             default: printf("Wrong choice");
         }
     } while (input != 6); // continuously asks user for input
-    return 0;
+
 }
 
 
