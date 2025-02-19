@@ -102,9 +102,16 @@ void addStudent() {
     scanf("%s", group);
     for (size_t i = 0; name[i] != '\0'; i++) {
         if (!isalpha(name[i])) {
+            printf("Invalid group format");
             return; // exit out of the function if not alphabet
         }
     }
+    if (!(group[0] == 'B' || group[0] == 'b' || group[0] == 'D' || group[0] == 'd')) {
+        printf("Invalid group format\n");
+        return;
+    }
+
+
     strcpy(studentName[studentCount], name);
 
     for (size_t i = 0; program[i] != '\0'; i++) {
@@ -167,8 +174,7 @@ void searchStudent() {
     int result = actualIntCheck(ID);
 
     if (result != 1) {
-        printf(
-            "You fucked up you dumb stupid bitch your are going to fail the math exam and your mom doesnt love you and i have sex with her.");
+        printf("invalid ID");
         return;
     }
 
