@@ -1,16 +1,9 @@
+
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
 #include <stdlib.h>
 
-#define MAX_STUDENTS 50
-#define MAX_CHARACTERS 100
-
-int studentCount = 0;
-char studentName[MAX_STUDENTS][MAX_CHARACTERS], studentProgram[MAX_STUDENTS][MAX_CHARACTERS],
-        studentGroup[MAX_STUDENTS][MAX_CHARACTERS];
-int studentID[MAX_STUDENTS], studentAge[MAX_STUDENTS];
-float studentGPA[MAX_STUDENTS];
 
 int actualIntCheck(char input[]) {
     int found = 1;
@@ -22,12 +15,14 @@ int actualIntCheck(char input[]) {
     return found;
 }
 
-void addStudent() {
+void addStudent(char studentName[][100], char studentProgram[][100], char studentGroup[][100], int studentID[],
+                int studentAge[], float studentGPA[], int *studentCount) {
+    int MAX_STUDENTS = 50;
     char name[100], program[100], group[50];
     char ID[100], age[100];
     int idInput, ageInput;
     float gpaInput;
-    if (studentCount > MAX_STUDENTS) {
+    if (*studentCount > MAX_STUDENTS) {
         printf("Max students reached.");
         return;
     }
@@ -53,7 +48,7 @@ void addStudent() {
         printf("ID out of range.");
         return;
     }
-    for (size_t i = 0; i < studentCount; i++) {
+    for (size_t i = 0; i < *studentCount; i++) {
         if (idInput == studentID[i]) {
             printf("Student with this ID already exists.");
             return;
@@ -67,7 +62,7 @@ void addStudent() {
         printf("Invalid age\n");
         return;
     }
-    for (size_t j = 0; j < studentCount; j++) {
+    for (size_t j = 0; j < *studentCount; j++) {
         if (ageInput == studentAge[j]) {
             printf("Student with this ID already exists.");
             return;
@@ -107,30 +102,31 @@ void addStudent() {
     }
 
 
-    strcpy(studentName[studentCount], name);
+    strcpy(studentName[*studentCount], name);
 
     for (size_t i = 0; program[i] != '\0'; i++) {
         if (!isalpha(program[i])) {
             return; // exit out of the function if not alphabet
         }
     }
-    strcpy(studentProgram[studentCount], program);
+    strcpy(studentProgram[*studentCount], program);
 
     for (size_t i = 0; group[i] != '\0'; i++) {
         if (!isalpha(group[i])) {
             return; // exit out of the function if not alphabet
         }
     }
-    strcpy(studentGroup[studentCount], group);
+    strcpy(studentGroup[*studentCount], group);
 
-    studentID[studentCount] = idInput;
-    studentAge[studentCount] = ageInput;
-    studentGPA[studentCount] = gpaInput;
-    studentCount++;
+    studentID[*studentCount] = idInput;
+    studentAge[*studentCount] = ageInput;
+    studentGPA[*studentCount] = gpaInput;
+    (*studentCount)++;
     printf("\nStudent added successfully\n");
 }
 
-void displayAllStudents() {
+void displayAllStudents(char studentName[][100], char studentProgram[][100], char studentGroup[][100], int studentID[],
+                        int studentAge[], float studentGPA[], int studentCount) {
     if (studentCount == 0) {
         printf("No Student records found.");
     }
@@ -160,7 +156,8 @@ void displayAllStudents() {
     }
 }
 
-void searchStudent() {
+void searchStudent(char studentName[][100], char studentProgram[][100], char studentGroup[][100], int studentID[],
+                   int studentAge[], float studentGPA[], int studentCount) {
     char ID[100];
     int userInput;
     printf("Enter a Student ID to find:");
@@ -191,26 +188,26 @@ void searchStudent() {
 }
 
 
-void deleteStudent() {
+void deleteStudent(char studentName[][100], char studentProgram[][100], char studentGroup[][100], int studentID[],
+                   int studentAge[], float studentGPA[], int *studentCount) {
     char ID[100];
     int userInput;
-    printf("Enter a Student ID to find:");
+    printf("\nEnter a Student ID to find:");
     scanf("%s", &ID);
 
     int result = actualIntCheck(ID);
 
     if (result != 1) {
-        printf(
-            "You fucked up you dumb stupid bitch your are going to fail the math exam and your mom doesnt love you and i have sex with her.");
+        printf("\nNot valid ID\n");
         return;
     }
 
     userInput = atoi(ID);
 
 
-    for (int i = 0; i < studentCount; i++) {
+    for (int i = 0; i < *studentCount; i++) {
         if (studentID[i] == userInput) {
-            for (int j = i; j < studentCount - 1; j++) {
+            for (int j = i; j < *studentCount - 1; j++) {
                 strcpy(studentName[j], studentName[j + 1]);
                 studentID[j] = studentID[j + 1];
                 studentAge[j] = studentAge[j + 1];
@@ -218,7 +215,7 @@ void deleteStudent() {
                 strcpy(studentProgram[j], studentProgram[j + 1]);
                 strcpy(studentGroup[j], studentGroup[j + 1]);
             }
-            studentCount--;
+            (*studentCount)--;
             printf("Student is deleted from the world!");
             return;
         }
@@ -226,7 +223,8 @@ void deleteStudent() {
     printf("ID wasn't found\n");
 }
 
-void listStudentGroup() {
+void listStudentGroup(char studentName[][100], char studentProgram[][100], char studentGroup[][100], int studentID[],
+                      int studentAge[], float studentGPA[], int studentCount) {
     char group[100];
     int userInput;
     char result1 = 'd';
@@ -238,7 +236,7 @@ void listStudentGroup() {
     int result = actualIntCheck(group);
 
     if (result != 1) {
-        printf("Invalid group Input.");
+        printf("\nInvalid group Input.\n");
         return;
     }
 
@@ -277,6 +275,14 @@ void listStudentGroup() {
 }
 
 int main(void) {
+    int MAX_STUDENTS = 50;
+    int MAX_CHARACTERS = 100;
+
+    int studentCount = 0;
+    char studentName[MAX_STUDENTS][MAX_CHARACTERS], studentProgram[MAX_STUDENTS][MAX_CHARACTERS],
+            studentGroup[MAX_STUDENTS][MAX_CHARACTERS];
+    int studentID[MAX_STUDENTS], studentAge[MAX_STUDENTS];
+    float studentGPA[MAX_STUDENTS];
     int input;
 
     do {
@@ -290,26 +296,28 @@ int main(void) {
         }
         switch (input) {
             case 1:
-                addStudent();
+                addStudent(studentName, studentProgram, studentGroup, studentID,
+                           studentAge, studentGPA, &studentCount);
                 break;
             case 2:
-                displayAllStudents();
+                displayAllStudents(studentName, studentProgram, studentGroup, studentID,
+                                   studentAge, studentGPA, studentCount);
                 break;
             case 3:
-                searchStudent();
+                searchStudent(studentName, studentProgram, studentGroup, studentID,
+                              studentAge, studentGPA, studentCount);
                 break;
             case 4:
-                deleteStudent();
+                deleteStudent(studentName, studentProgram, studentGroup, studentID,
+                              studentAge, studentGPA, &studentCount);
                 break;
             case 5:
-                listStudentGroup();
+                listStudentGroup(studentName, studentProgram, studentGroup, studentID,
+                                 studentAge, studentGPA, studentCount);
                 break;
             case 6: printf("Exit the program");
                 break;
             default: printf("Wrong choice");
         }
     } while (input != 6); // continuously asks user for input
-
 }
-
-
