@@ -4,7 +4,6 @@
 #include <stdlib.h>
 
 
-
 typedef struct {
     char name[50];
     char id[10];
@@ -12,12 +11,12 @@ typedef struct {
     char program[50];
     float gpa;
     char group[4];
-}Student;
+} Student;
 
-typedef struct{
+typedef struct {
     Student *ptr;
     int count;
-}database;
+} database;
 
 int actualIntCheck(char input[]) {
     int found = 1;
@@ -31,7 +30,6 @@ int actualIntCheck(char input[]) {
 
 int validateIdInput(const char *input) {
     if (strlen(input) != 9) {
-
         return 0; // Invalid
     }
     if (input[0] != 'A' && input[0] != 'a') {
@@ -45,30 +43,14 @@ int validateIdInput(const char *input) {
     return 1; // Valid
 }
 
-void addStudent( database *db) {
-    db -> ptr= realloc(db->ptr, (db->count + 1) * sizeof(Student));
+void addStudent(database *db) {
+    db->ptr = realloc(db->ptr, (db->count + 1) * sizeof(Student));
 
-    Student* newStudent = &db->ptr[db->count]; //Making space in library for new book
+    Student *newStudent = &db->ptr[db->count]; //Making space in library for new book
 
     printf("Enter a name: ");
     scanf("%s", newStudent->name);
-    printf("Enter a id: ");
-    scanf("%s", newStudent->id);
     getchar();
-    printf("Enter an age: ");
-    scanf("%d", &newStudent->age);
-
-    printf("Enter a program: ");
-    scanf("%s", newStudent->program);
-    getchar();
-    printf("Enter a gpa: ");
-    scanf("%d", &newStudent->gpa);
-
-    printf("Enter a group:");
-    scanf("%s", &newStudent->group);
-
-
-
     for (size_t i = 0; newStudent->name[i] != '\0'; i++) {
         if (!isalpha(newStudent->name[i])) {
             printf("Invalid name format");
@@ -76,85 +58,68 @@ void addStudent( database *db) {
         }
     }
 
-    if (validateIdInput(newStudent->id) == 0) {
-        printf("Invalid ID Format\n");
+    printf("Enter a id: ");
+    scanf("%s", newStudent->id);
+    getchar();
+
+    if (!validateIdInput(newStudent->id)) {
+        printf("invalid id format\n");
         return;
     }
 
-    // for (size_t i = 0; i < *studentCount; i++) {
-    //     if (newStudent->id == students[i] -> id) {
-    //         printf("Student with this ID already exists.");
-    //         return;
-    //     }
-    // }
+    for (size_t i = 0; i < db->count; i++) {
+        if (newStudent->id == db->ptr[i].id) {
+            printf("Student with this ID already exists.");
+            return;
+        }
+    }
 
 
-    // newStudent->age = atoi(newStudent->age);
-    // if (actualIntCheck(newStudent->age) == 0) {
-    //     printf("Invalid age\n");
-    //     return;
-    // }
-
-    // for (size_t i = 0; newStudent->program[i] != '\0'; i++) {
-    //     if (!isalpha(newStudent->program[i])) {
-    //         return; // exit out of the function if not alphabet
-    //     }
-    // }
-    //
-    //
-    // if (!scanf("%f", &newStudent->gpa)) {
-    //     printf("Invalid GPA input\n");
-    //     int c;
-    //     // loop to clear out input buffer!
-    //     while ((c = getchar()) != '\n' && c != EOF) {
-    //     };
-    //     return;
-    // }
-    //
-    // printf("- Enter a Group(B - BBY or D - DTC):");
-    // scanf("%s", newStudent->group);
-    // for (size_t i = 0; newStudent->group[i] != '\0'; i++) {
-    //     if (!isalpha(newStudent->group[i])) {
-    //         printf("Invalid group format");
-    //         return; // exit out of the function if not alphabet
-    //     }
-    // }
-    // // Validates input to be b or d
-    // if (!(newStudent->group[0] == 'B' || newStudent->group[0] == 'b' ||
-    // newStudent->group[0] == 'D' || newStudent->group[0] == 'd')) {
-    //     printf("Invalid group format\n");
-    //     return;
-    // }
+    printf("Enter an age: ");
+    scanf("%d", &newStudent->age);
 
 
-//    strcpy(studentName[*studentCount], name);
+    if (isdigit(newStudent->age)) {
+        printf("Invalid age format\n");
+        return;
+    }
 
-    // for (size_t i = 0; newStudent->program[i] != '\0'; i++) {
-    //     if (!isalpha(newStudent->program[i])) {
-    //         printf("Invalid program format");
-    //         return; // exit out of the function if not alphabet
-    //     }
-    // }
-    //
-    //
-    //
-    // for (size_t i = 0; newStudent->group[i] != '\0'; i++) {
-    //     if (!isalpha(newStudent->group[i])) {
-    //         printf("Invalid group format");
-    //         return; // exit out of the function if not alphabet
-    //     }
-    // }
-//    strcpy(newStudent.group[*studentCount], newStudent.group);
+    printf("Enter a program: ");
+    scanf("%s", newStudent->program);
+    getchar();
+    for (size_t i = 0; newStudent->program[i] != '\0'; i++) {
+        if (!isalpha(newStudent->program[i])) {
+            printf("Invalid program format");
+            return; // exit out of the function if not alphabet
+        }
+    }
+    //Program checking here
 
-//    studentID[*studentCount] = idInput;
-//    studentAge[*studentCount] = ageInput;
-//    studentGPA[*studentCount] = gpaInput;
-   // Student *temp = realloc(students, sizeof(Student) * (*studentCount));
-   //
-   //  *students = temp;
+    printf("Enter a gpa: ");
+    scanf("%d", &newStudent->gpa);
 
+    if (newStudent->gpa < 0) {
+        printf("Invalid gpa format\n");
+        return;
+    }
 
-    // students[*studentCount] = newStudent;
+    printf("- Enter a Group(B - BBY or D - DTC):");
+    scanf("%s", newStudent->group);
+    getchar();
+
+    for (size_t i = 0; newStudent->group[i] != '\0'; i++) {
+        if (!isalpha(newStudent->group[i])) {
+            printf("Invalid group format");
+            return; // exit out of the function if not alphabet
+        }
+    }
+    // Validates input to be b or d
+    if (!(newStudent->group[0] == 'B' || newStudent->group[0] == 'b' ||
+          newStudent->group[0] == 'D' || newStudent->group[0] == 'd')) {
+        printf("Invalid group format\n");
+        return;
+    }
+
     db->count++;
     printf("\nStudent added successfully\n");
 }
@@ -164,7 +129,7 @@ void displayAllStudents(const database *db) {
         printf("No Student records found.");
     }
     printf("\nGroup BBY\n");
-    for (int i = 0; i < db -> count; i++) {
+    for (int i = 0; i < db->count; i++) {
         if (*db->ptr[i].group == 'b' || *db->ptr[i].group == 'B') {
             printf("\nName: %s, ID: %s, Age: %d, Program: %s, GPA: %.2f, Group: %s",
                    db->ptr[i].name,
@@ -176,7 +141,7 @@ void displayAllStudents(const database *db) {
         }
     }
     printf("\nGroup DTC\n");
-    for (int i = 0; i < db -> count; i++) {
+    for (int i = 0; i < db->count; i++) {
         if (*db->ptr[i].group == 'd' || *db->ptr[i].group == 'D') {
             printf("\nName: %s, ID: %s, Age: %d, Program: %s, GPA: %.2f, Group: %s",
                    db->ptr[i].name,
@@ -195,12 +160,12 @@ void searchStudent(const database *db) {
     printf("Enter a Student ID to find:");
     scanf("%s", &ID);
 
-    if (!validateIdInput(ID)){
+    if (!validateIdInput(ID)) {
         printf("Invalid ID");
         return;
     }
 
-    for (int i = 0; i < db -> count; i++) {
+    for (int i = 0; i < db->count; i++) {
         if (strcmp(db->ptr[i].id, ID) == 0) {
             printf("\nName: %s, ID: %s, Age: %d, Program: %s, GPA: %.2f, Group: %s",
                    db->ptr[i].name,
@@ -224,7 +189,7 @@ void deleteStudent(database *db) {
     int result = validateIdInput(ID);
 
     int index = 0;
-    for (int i = 0; i < db -> count; i++) {
+    for (int i = 0; i < db->count; i++) {
         if (strcmp(db->ptr[i].id, ID) == 0) {
             index = i;
             break;
@@ -234,12 +199,12 @@ void deleteStudent(database *db) {
         printf("Student ID was not found\n");
     }
 
-    for (int i = index; i < db -> count; i++) {
+    for (int i = index; i < db->count; i++) {
         db->ptr[i] = db->ptr[i + 1];
     }
     db->count--;
-    if (db -> count > 0) {
-        Student *temp = realloc(db->ptr, (db -> count) * sizeof(Student));
+    if (db->count > 0) {
+        Student *temp = realloc(db->ptr, (db->count) * sizeof(Student));
         db->ptr = temp;
     } else {
         free(db->ptr);
@@ -248,7 +213,6 @@ void deleteStudent(database *db) {
 
     printf("Student is deleted from the world!");
 }
-
 
 
 void listStudentGroup(const database *db) {
@@ -268,90 +232,177 @@ void listStudentGroup(const database *db) {
 
     if (userInput == 2) {
         printf("\nGroup DTC");
-        for (int i = 0; i < db -> count; i++) {
+        for (int i = 0; i < db->count; i++) {
             if (*db->ptr[i].group == result1) {
                 printf("\nName: %s, ID: %s, Age: %d, Program: %s, GPA: %.2f, Group: %s\n",
-                   db->ptr[i].name,
-                   db->ptr[i].id,
-                   db->ptr[i].age,
-                   db->ptr[i].program,
-                   db->ptr[i].gpa,
-                   db->ptr[i].group);
+                       db->ptr[i].name,
+                       db->ptr[i].id,
+                       db->ptr[i].age,
+                       db->ptr[i].program,
+                       db->ptr[i].gpa,
+                       db->ptr[i].group);
             }
         }
-    }else if (userInput == 1) {
+    } else if (userInput == 1) {
         printf("\nGroup BBY");
-        for (int i = 0; i < db -> count; i++) {
+        for (int i = 0; i < db->count; i++) {
             if (*db->ptr[i].group == result2) {
                 printf("\nName: %s, ID: %s, Age: %d, Program: %s, GPA: %.2f, Group: %s \n",
-                    db->ptr[i].name,
-                    db->ptr[i].id,
-                    db->ptr[i].age,
-                    db->ptr[i].program,
-                    db->ptr[i].gpa,
-                    db->ptr[i].group);
+                       db->ptr[i].name,
+                       db->ptr[i].id,
+                       db->ptr[i].age,
+                       db->ptr[i].program,
+                       db->ptr[i].gpa,
+                       db->ptr[i].group);
             }
-
         }
-    }else {
+    } else {
         printf("\nGroup not recognized\n");
     }
 }
-void populateSampleData(database *db) {
-    db->ptr = realloc(db->ptr, 4 * sizeof(Student));
-    if (db->ptr == NULL) {
-        printf("Memory allocation failed!\n");
-        exit(1);
-    }
 
-    Student *s1 = &db->ptr[0];
-    strcpy(s1->name, "John Doe");
-    strcpy(s1->id, "A12345678");
-    s1->age = 20;
-    strcpy(s1->program, "Computer Science");
-    s1->gpa = 3.50;
-    strcpy(s1->group, "b");
-
-    Student *s2 = &db->ptr[1];
-    strcpy(s2->name, "Alice Brown");
-    strcpy(s2->id, "A23456789");
-    s2->age = 19;
-    strcpy(s2->program, "Software Engineering");
-    s2->gpa = 3.75;
-    strcpy(s2->group, "b");
-
-    Student *s3 = &db->ptr[2];
-    strcpy(s3->name, "Bob Smith");
-    strcpy(s3->id, "A34567890");
-    s3->age = 21;
-    strcpy(s3->program, "Mechanical Engineering");
-    s3->gpa = 3.20;
-    strcpy(s3->group, "d");
-
-    Student *s4 = &db->ptr[3];
-    strcpy(s4->name, "Emma Wilson");
-    strcpy(s4->id, "A45678901");
-    s4->age = 22;
-    strcpy(s4->program, "Electrical Engineering");
-    s4->gpa = 3.90;
-    strcpy(s4->group, "d");
-
-    db->count = 4;
+int idSortAsc(const void *a, const void *b) {
+    const Student *studentA = (const Student *) a;
+    const Student *studentB = (const Student *) b;
+    return strcmp(studentA->id, studentB->id);
 }
 
-int main(void) {
-    int MAX_STUDENTS = 50;
-    int MAX_CHARACTERS = 100;
-    database db ={NULL, 0};
-    populateSampleData(&db);
-    int studentCount = 0;
+int idSortDes(const void *a, const void *b) {
+    const Student *studentA = (const Student *) a;
+    const Student *studentB = (const Student *) b;
+    return strcmp(studentB->id, studentA->id);
+}
 
-    Student *students[10]; // Student**
+int nameSortAsc(const void *a, const void *b) {
+    const Student *studentA = (const Student *) a;
+    const Student *studentB = (const Student *) b;
+    return strcmp(studentA->name, studentB->name);
+}
+
+int nameSortDes(const void *a, const void *b) {
+    const Student *studentA = (const Student *) a;
+    const Student *studentB = (const Student *) b;
+    return strcmp(studentB->name, studentA->name);
+}
+
+int gpaSortAsc(const void *a, const void *b) {
+    const Student *studentA = (const Student *) a;
+    const Student *studentB = (const Student *) b;
+    if (studentA->gpa < studentB->gpa) return -1;
+    if (studentA->gpa > studentB->gpa) return 1;
+    return 0;
+}
+
+int gpaSortDes(const void *a, const void *b) {
+    const Student *studentA = (const Student *) a;
+    const Student *studentB = (const Student *) b;
+    if (studentB->gpa < studentA->gpa) return -1;
+    if (studentB->gpa > studentA->gpa) return 1;
+    return 0;
+}
+
+void sortStudents(database *db) {
+    int sortBy;
+    int sortOrder;
+
+    printf("\nPick an option (1-3):\n1) Sort by ID\n2) Sort by name\n3) Sort by GPA\n");
+    scanf("%d", &sortBy);
+    printf("\nPick an option (1-2):\n1) Sort by ascending\n2) Sort by descending\n");
+    scanf("%d", &sortOrder);
+
+    switch (sortBy) {
+        case 1:
+            qsort(db->ptr, db->count, sizeof(Student), (sortOrder == 1) ? idSortAsc : idSortDes);
+            break;
+        case 2:
+            qsort(db->ptr, db->count, sizeof(Student), (sortOrder == 1) ? nameSortAsc : nameSortDes);
+            break;
+        case 3:
+            qsort(db->ptr, db->count, sizeof(Student), (sortOrder == 1) ? gpaSortAsc : gpaSortDes);
+        default:
+            printf("Invalid option passed\n");
+            break;
+    }
+}
+
+int fileTime(database *db) {
+    FILE *filePtr;
+    filePtr = fopen("students.txt", "w");
+    for (int i = 0; i < db->count; i++) {
+        fprintf(filePtr, "Name: %s, ID: %s, Age: %d, Program: %s, GPA: %.2f, Group: %s\n",
+                db->ptr[i].name,
+                db->ptr[i].id,
+                db->ptr[i].age,
+                db->ptr[i].program,
+                db->ptr[i].gpa,
+                db->ptr[i].group);
+    }
+    fclose(filePtr);
+    return 0;
+}
+
+int readToDatabase(database *db) {
+    FILE *filePtr;
+    char buffer[1000];
+
+    filePtr = fopen("students.txt", "r");
+    if (filePtr == NULL) {
+        printf("Error opening file!\n");
+        return -1;
+    }
+
+    // Count lines first to allocate correct memory
+    int lineCount = 0;
+    while (fgets(buffer, sizeof(buffer), filePtr) != NULL) {
+        lineCount++;
+    }
+    rewind(filePtr); // Go back to start of file
+
+    // Allocate memory for the students
+    db->ptr = (Student *) malloc(lineCount * sizeof(Student));
+    if (db->ptr == NULL) {
+        printf("Memory allocation failed!\n");
+        fclose(filePtr);
+        return -1;
+    }
+
+    // Read and parse each line
+    int index = 0;
+    while (fgets(buffer, sizeof(buffer), filePtr) != NULL) {
+        Student *student = &db->ptr[index];
+
+        // Parse the line - note the spaces after colons match your output format
+        if (sscanf(buffer, "Name: %[^,], ID: %[^,], Age: %d, Program: %[^,], GPA: %f, Group: %s",
+                   student->name,
+                   student->id,
+                   &student->age,
+                   student->program,
+                   &student->gpa,
+                   student->group) == 6) {
+            index++;
+        } else {
+            printf("Error parsing line: %s", buffer);
+        }
+    }
+
+    db->count = index; // Update actual count of successfully read students
+
+    fclose(filePtr);
+    return 0;
+}
+
+
+int main(void) {
+    database db = {NULL, 0};
+    if ("students.txt" != NULL) {
+        readToDatabase(&db);
+    }
+
     int input;
-//
+
     do {
-        printf("\nPick an option (1-6):\n1) Add Student\n2) Display All Students\n3) Search for a Student\n"
-            "4) Delete a Student\n5) List All Group Members\n6) Exit the Program\n");
+        printf("\nPick an option (1-7):\n1) Add Student\n2) Display All Students\n3) Search for a Student\n"
+            "4) Delete a Student\n5) List All Group Members\n6) Sort Students\n7) Saves to File\n8) Exit program\n");
 
         if (scanf("%d", &input) != 1) {
             int c;
@@ -375,10 +426,16 @@ int main(void) {
                 listStudentGroup(&db);
                 break;
             case 6:
+                sortStudents(&db);
                 break;
-            case 7: printf("Exit the program");
+            case 7:
+                fileTime(&db);
+                break;
+            case 8: printf("Exit the program");
                 break;
             default: printf("Wrong choice");
         }
-    } while (input != 6); // continuously asks user for input
+    } while (input != 8);
 }
+
+

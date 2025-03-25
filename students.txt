@@ -1,0 +1,6 @@
+Name: Emma Wilson, ID: A45678901, Age: 22, Program: Electrical Engineering, GPA: 3.90, Group: d
+Name: Nick Sutton, ID: A45600901, Age: 22, Program: Electrical Engineerig, GPA: 4.50, Group: d
+Name: Bob Smith, ID: A34567890, Age: 21, Program: Mechanical Engineering, GPA: 3.20, Group: d
+Name: John Doe, ID: A12345678, Age: 20, Program: Computer Science, GPA: 3.50, Group: b
+Name: Alice Brown, ID: A23456789, Age: 19, Program: Software Engineering, GPA: 3.75, Group: b
+Name: tim, ID: a01234567, Age: 23, Program: cst, GPA: 0.00, Group: b
