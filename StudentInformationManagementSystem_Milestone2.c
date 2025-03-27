@@ -79,7 +79,9 @@ void addStudent(database *db) {
 
     if (scanf("%d", &newStudent->age) != 1) {
         printf("Invalid age format\n");
-        getchar();
+        int c;
+        while ((c = getchar()) != '\n' && c != EOF) {
+        }
         return;
     }
 
@@ -95,10 +97,12 @@ void addStudent(database *db) {
     //Program checking here
 
     printf("Enter a gpa: ");
-    scanf("%d", &newStudent->gpa);
 
-    if (newStudent->gpa < 0) {
-        printf("Invalid gpa format\n");
+    if (scanf("%lf", &newStudent->gpa) != 1) {
+        printf("Invalid GPA format\n");
+        int c;
+        while ((c = getchar()) != '\n' && c != EOF) {
+        }
         return;
     }
 
@@ -403,7 +407,7 @@ int main(void) {
 
     do {
         printf("\nPick an option (1-7):\n1) Add Student\n2) Display All Students\n3) Search for a Student\n"
-            "4) Delete a Student\n5) List All Group Members\n6) Sort Students\n7) Saves to File\n8) Exit program\n");
+            "4) Delete a Student\n5) List By Group Members\n6) Sort Students\n7) Saves to File\n8) Exit program\n");
 
         if (scanf("%d", &input) != 1) {
             int c;
