@@ -76,11 +76,10 @@ void addStudent(database *db) {
 
 
     printf("Enter an age: ");
-    scanf("%d", &newStudent->age);
 
-
-    if (isdigit(newStudent->age)) {
+    if (scanf("%d", &newStudent->age) != 1) {
         printf("Invalid age format\n");
+        getchar();
         return;
     }
 
@@ -223,12 +222,14 @@ void listStudentGroup(const database *db) {
 
     printf("Enter a group(1. BBY / 2. DTC):");
     // scanf("%s", &group);
-    scanf("%d", &userInput);
-
-    // if (result != 1) {
-    //     printf("\nInvalid group Input.\n");
-    //     return;
-    // }
+    // scanf("%d", &userInput);
+    if (!scanf("%d", &userInput)) {
+        printf("Invalid group format\n");
+        int c;
+        while ((c = getchar()) != '\n' && c != EOF) {
+        };
+        return;
+    }
 
     if (userInput == 2) {
         printf("\nGroup DTC");
