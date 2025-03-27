@@ -274,6 +274,16 @@ void listStudentGroup(char studentName[][100], char studentProgram[][100], char 
     }
 }
 
+void sortStudents(Database *db) {
+    int sortBy;
+
+    printf("\nPick an option (1-3):\n1) Sort by ID\n2) Sort by name\n3) Sort by GPA\n");
+    scanf("%d", &sortBy);
+    if (sortBy != 1 && sortBy != 2 && sortBy != 3) {
+    }
+    printf("\nPick an option (1-2):\n1) Sort by ascending\n2) Sort by descending\n");
+}
+
 int main(void) {
     int MAX_STUDENTS = 50;
     int MAX_CHARACTERS = 100;
